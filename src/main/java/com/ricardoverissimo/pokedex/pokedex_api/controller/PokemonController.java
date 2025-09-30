@@ -34,6 +34,7 @@ public class PokemonController {
                 newPokemon.getAttack(),
                 newPokemon.getDefense(),
                 newPokemon.getImageUrl(),
+                newPokemon.getTrainer().getId(),
                 newPokemon.getTrainer().getUsername(),
                 newPokemon.getTypes().stream().map(t -> t.getName()).toList(),
                 newPokemon.getAbilities().stream().map(a -> a.getName()).toList()
