@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class TrainerRegistrationDTO (
+public record TrainerRegistrationDTO (
 
         @NotBlank(message = "O nome de usuário é obrigatório.")
         @Size(min = 3, max = 50, message = "O nome deve ter entre 3 e 50 caracteres.")

@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table
+@Table  (name = "pokemons")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,10 +34,13 @@ public class Pokemon {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "pokemon.ability",
+            name = "pokemon_ability",
             joinColumns = @JoinColumn(name = "pokemon_id"),
             inverseJoinColumns = @JoinColumn(name = "ability_id")
     )
     private List<Ability> abilities;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trainer_id", nullable = false)
+    private Trainer trainer;
 }

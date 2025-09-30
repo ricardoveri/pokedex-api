@@ -36,8 +36,8 @@ public class PokemonService {
         List<Ability> abilities = resolveAbilities(createDto.abilities());
 
         Pokemon pokemon = new Pokemon();
-        pokemon.setName(CreateDto.name());
-        pokemon.setPokedexNumber(createDto.abilities);
+        pokemon.setName(createDto.name());
+        pokemon.setPokedexNumber(createDto.pokedexNumber());
         pokemon.setHp(createDto.hp());
         pokemon.setAttack(createDto.attack());
         pokemon.setDefense(createDto.defense());

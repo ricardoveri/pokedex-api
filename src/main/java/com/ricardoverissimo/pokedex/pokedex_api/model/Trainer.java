@@ -29,7 +29,7 @@ public class Trainer {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "trainer, cascade = CascadeType.All, orphanRemoval = true, fetch = FetchType.Lazy")
+    @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Pokemon> pokemons = new ArrayList<>();
 
 }

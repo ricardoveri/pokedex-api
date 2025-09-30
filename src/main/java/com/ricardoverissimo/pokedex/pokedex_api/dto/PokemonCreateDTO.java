@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Positive;
 
 import java.util.List;
 
-public class PokemonCreateDTO(
+public record PokemonCreateDTO(
 
     @NotBlank(message = "O nome é obrigatório.")
     String name,
@@ -22,5 +22,5 @@ public class PokemonCreateDTO(
     String imageUrl,
 
     List<String> types,
-    List<String> abilites
+    List<String> abilities
 ){}
