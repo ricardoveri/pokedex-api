@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pokemons")
 public class PokemonController {
@@ -18,15 +20,36 @@ public class PokemonController {
         this.pokemonService = pokemonService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<PokemonResponseDTO>> getAllPokemons() {
+        List<PokemonResponseDTO> pokemons = pokemonService.getAllPokemons().stream()
+                .map(this::convertToDto)
+                .toList();
+
+        return ResponseEntity.ok(pokemons);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PokemonResponseDTO> getPokemonById(@PathVariable Long id) {
+        Pokemon pokemon = pokemonService.getPokemonById(id);
+        return ResponseEntity.ok(convertToDto(pokemon));
+    }
+
     @PostMapping("/trainer/{trainerId}")
     public ResponseEntity<PokemonResponseDTO> createPokemon(
             @PathVariable Long trainerId,
             @Valid @RequestBody PokemonCreateDTO createDTO
-            ){
+    ){
 
         Pokemon newPokemon = pokemonService.createPokemon(trainerId, createDTO);
 
-        PokemonResponseDTO responseDTO = new PokemonResponseDTO(
+        PokemonResponseDTO responseDTO = convertToDto(newPokemon);
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+    }
+
+    private PokemonResponseDTO convertToDto(Pokemon newPokemon) {
+        return new PokemonResponseDTO(
                 newPokemon.getId(),
                 newPokemon.getName(),
                 newPokemon.getPokedexNumber(),
@@ -39,7 +62,5 @@ public class PokemonController {
                 newPokemon.getTypes().stream().map(t -> t.getName()).toList(),
                 newPokemon.getAbilities().stream().map(a -> a.getName()).toList()
         );
-
-        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 }
