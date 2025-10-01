@@ -5,7 +5,6 @@ import com.ricardoverissimo.pokedex.pokedex_api.model.Ability;
 import com.ricardoverissimo.pokedex.pokedex_api.model.Pokemon;
 import com.ricardoverissimo.pokedex.pokedex_api.model.Trainer;
 import com.ricardoverissimo.pokedex.pokedex_api.model.Type;
-import com.ricardoverissimo.pokedex.pokedex_api.repository.*;
 import com.ricardoverissimo.pokedex.pokedex_api.repository.AbilityRepository;
 import com.ricardoverissimo.pokedex.pokedex_api.repository.PokemonRepository;
 import com.ricardoverissimo.pokedex.pokedex_api.repository.TrainerRepository;
@@ -63,4 +62,14 @@ public class PokemonService {
                         .orElseGet(() -> abilityRepository.save(new Ability(null, name))))
                 .collect(Collectors.toList());
     }
+
+    public List<Pokemon> getAllPokemons() {
+        return pokemonRepository.findAll();
+    }
+
+    public Pokemon getPokemonById(Long pokemonId) {
+        return pokemonRepository.findById(pokemonId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pokemon", "id", pokemonId));
+    }
+
 }
