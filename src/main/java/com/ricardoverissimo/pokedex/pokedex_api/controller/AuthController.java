@@ -1,4 +1,6 @@
 package com.ricardoverissimo.pokedex.pokedex_api.controller;
+import com.ricardoverissimo.pokedex.pokedex_api.dto.JwtAuthResponse;
+import com.ricardoverissimo.pokedex.pokedex_api.dto.LoginDTO;
 import com.ricardoverissimo.pokedex.pokedex_api.dto.TrainerRegistrationDTO;
 import com.ricardoverissimo.pokedex.pokedex_api.model.Trainer;
 import com.ricardoverissimo.pokedex.pokedex_api.service.AuthService;
@@ -25,5 +27,11 @@ public class AuthController {
         Trainer newTrainer = authService.register(registrationDTO);
 
         return new ResponseEntity<>("Treinador " + newTrainer.getUsername() + " registrado com sucesso!", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtAuthResponse> authenticate(@Valid @RequestBody LoginDTO request) {
+        String token = authService.authenticate(request);
+        return ResponseEntity.ok(new JwtAuthResponse(token, "Bearer"));
     }
 }
